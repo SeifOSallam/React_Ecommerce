@@ -7,7 +7,7 @@ function ProductsList(props){
         <div className="d-flex flex-wrap">
             {products.map((product, index) => {
                 return(
-                    <ProductCard product = {product} key={index} id={index}/>
+                    <ProductCard product = {product} key={index} id={index+1}/>
                 );
             })}
         </div>
