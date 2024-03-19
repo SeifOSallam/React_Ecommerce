@@ -3,12 +3,11 @@ import './navbar.css'
 
 function NavigationBar() {
     return(
-        <div class="p-4 d-flex nav">
-            HELLO NAVBAR
-            <Link to={'/'} class="text-success me-auto navElement">Products App</Link>
-            <Link to={'/'} class="me-4 navElement text-black">Register</Link>
-            <Link to={'/'} class="navElement text-black me-4">Login</Link>
-            <Link to={'/'} class="navElement" ><i class="fas fa-shopping-cart"></i></Link>
+        <div className="p-4 d-flex nav">
+            <Link to={'/'} className="text-success me-auto navElement">Products App</Link>
+            <Link to={'/register'} className="me-4 navElement text-black">Register</Link>
+            <Link to={'/'} className="navElement text-black me-4">Login</Link>
+            <Link to={'/'} className="navElement" ><i className="fas fa-shopping-cart"></i></Link>
         </div>
     )
 }

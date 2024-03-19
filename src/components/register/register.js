@@ -1,92 +1,106 @@
+import { useFormik } from 'formik'
 import React from 'react'
+import { Link } from 'react-router-dom'
+import * as Yup from 'yup';
 
 export default function Register() {
+
+    const formik = useFormik({
+        initialValues: {
+            name: '',
+            email: '',
+            password: '',
+            confpassword: '',
+            photo: '',
+        },
+        validationSchema: Yup.object({
+            name: Yup.string()
+              .required('Required'),
+
+            email: Yup.string().email('Invalid email address').required('Required'),
+
+            password: Yup.string()
+            .min(8, 'Must be 8 characters or more')
+            .max(12, 'Must be 12 characters or less')
+            .required('Required'),
+
+            confpassword: Yup.string()
+            .oneOf([Yup.ref('password'), null], 'Passwords must match')
+            .required('Required'),
+
+            photo: Yup.string()
+            .required('Required')
+        }),
+        
+        onSubmit: values => {
+            console.log(JSON.stringify(values, null, 2));
+        },
+    })
     return (
-        <form class="w-25 border border shadow m-auto p-4 mt-3">
-        <label for="name" class="form-label">Name</label>
+        <form className="w-25 border border shadow m-auto p-4 mt-3" onSubmit={formik.handleSubmit}>
+        <label htmlFor="name" className="form-label">Name</label>
         <input
             name="name"
             id="name"
             type="name"
-            class="form-control"
-            formControlName="name"
+            className="form-control"
+            {...formik.getFieldProps('name')}
         />
-        @if(registerForm.controls['name'].invalid &&
-         (registerForm.controls['name'].touched || registerForm.controls['name'].dirty)) {
-            <div id="nameHelp" class="form-text text-danger">
-                @if(registerForm.controls['name'].errors?.['required']){
-                <small>This field is required</small>
-                } @if(registerForm.controls['name'].errors?.['pattern']) {
-                <small>Invalid Format</small>
-                }
-            </div>
-        }
+        {formik.touched.name && formik.errors.name ?
+         <div className="text-danger">{formik.errors.name}</div> : null}
     
         <br/>
-        <label for="email" class="form-label">Email</label>
+        <label htmlFor="email" className="form-label">Email</label>
         <input
             name="email"
             id="email"
             type="email"
-            class="form-control"
+            className="form-control"
+            {...formik.getFieldProps('email')}
         />
-        @if(registerForm.controls['email'].invalid &&
-         (registerForm.controls['email'].touched || registerForm.controls['email'].dirty)) {
-            <div id="emailHelp" class="form-text text-danger">
-                @if(registerForm.controls['email'].errors?.['required']){
-                <small>This field is required</small>
-                } @if(registerForm.controls['email'].errors?.['pattern']) {
-                <small>Invalid Format</small>
-                }
-            </div>
-        }
+        {formik.touched.email && formik.errors.email 
+        ? <div className="text-danger">{formik.errors.email}</div> : null}
+
+
         <br/>
-    
-        <label for="username" class="form-label">Username</label>
-        <input
-            name="username"
-            id="username"
-            type="username"
-            class="form-control"
-        />
-        @if(registerForm.controls['username'].invalid &&
-         (registerForm.controls['username'].touched || registerForm.controls['username'].dirty)) {
-            <div id="usernameHelp" class="form-text text-danger">
-                @if(registerForm.controls['username'].errors?.['required']){
-                <small>This field is required</small>
-                } @if(registerForm.controls['username'].errors?.['pattern']) {
-                <small>Invalid Format</small>
-                }
-            </div>
-        }
-        <br/>
-    
-        <label for="password" class="form-label">Password</label>
+        
+        <label htmlFor="password" className="form-label">Password</label>
         <input
             name="password"
             id="password"
             type="password"
-            class="form-control"
-            formControlName="password"
+            className="form-control"
+            {...formik.getFieldProps('password')}
         />
-        @if(registerForm.controls['password'].invalid &&
-         (registerForm.controls['password'].touched || registerForm.controls['password'].dirty)) {
-            <div id="passwordHelp" class="form-text text-danger">
-                @if(registerForm.controls['password'].errors?.['required']){
-                <small>This field is required</small>
-                } 
-                @if(registerForm.controls['password'].errors?.['minlength']){
-                <small>Min. 8 characters</small>
-                }
-                @else if(registerForm.controls['password'].errors?.['pattern']) {
-                <small>Invalid Format</small>
-                }
-            </div>
-        }
+        {formik.touched.password && formik.errors.password ?
+         <div className="text-danger">{formik.errors.password}</div> : null}
+        <br/>
+
+        <label htmlFor="confpassword" className="form-label">Confirm Password</label>
+        <input
+            name="confpassword"
+            id="confpassword"
+            type="password"
+            className="form-control"
+            {...formik.getFieldProps('confpassword')}
+        />
+        {formik.touched.confpassword && formik.errors.confpassword ? 
+        <div className="text-danger">{formik.errors.confpassword}</div> : null}
+        <br/>
+
+        <label htmlFor="photo" className="form-label">Photo</label>
+        <input
+            name="photo"
+            id="photo"
+            type="file"
+            className="form-control"
+            {...formik.getFieldProps('photo')}
+        />
+        {formik.errors.photo ? <div className="text-danger">{formik.errors.photo}</div> : null}
         <br/>
     
-        <button type="submit" class="btn btn-primary w-100" disabled>Register</button><br/>
-        <span style="font-size: 12px;">Already have an account? <a routerLink="/login">Login!</a></span>
+        <button type="submit" className="btn btn-primary w-100">Register</button><br/>
+        <span>Already have an account? <Link to="/">Login!</Link></span>
     </form>
   )
 }
