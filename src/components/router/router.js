@@ -3,7 +3,7 @@ import Home from "../home/home"
 import ProductDetails from "../productDetails/productDetails"
 import NavigationBar from "../navbar/navbar";
 import Register from "../register/register";
-
+import Profile from "../profile/profile";
 function Layout() {
     return (
       <>
@@ -29,6 +29,10 @@ export const router = createBrowserRouter([
               path:"/register",
               element: <Register/>
             },
+            {
+              path:"/profile",
+              element: <Profile/>
+            }
             // {
             //   path: "/form", 
             //   element: <Form />,

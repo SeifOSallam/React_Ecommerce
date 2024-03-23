@@ -1,10 +1,13 @@
 import { useFormik } from 'formik'
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom'
+import { addUserInfo } from '../../store/slices/profileSlice';
 import * as Yup from 'yup';
 
 export default function Register() {
-
+    const navigate = useNavigate();
+    const dispatch = useDispatch()
     const formik = useFormik({
         initialValues: {
             name: '',
@@ -33,7 +36,8 @@ export default function Register() {
         }),
         
         onSubmit: values => {
-            console.log(JSON.stringify(values, null, 2));
+            dispatch(addUserInfo(values))
+            navigate('/profile');
         },
     })
     return (
@@ -96,7 +100,8 @@ export default function Register() {
             className="form-control"
             {...formik.getFieldProps('photo')}
         />
-        {formik.errors.photo ? <div className="text-danger">{formik.errors.photo}</div> : null}
+        {formik.touched.photo && formik.errors.photo ? 
+        <div className="text-danger">{formik.errors.photo}</div> : null}
         <br/>
     
         <button type="submit" className="btn btn-primary w-100">Register</button><br/>
