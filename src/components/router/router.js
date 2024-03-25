@@ -4,6 +4,7 @@ import ProductDetails from "../productDetails/productDetails"
 import NavigationBar from "../navbar/navbar";
 import Register from "../register/register";
 import Profile from "../profile/profile";
+import UserCart from "../userCart/userCart";
 function Layout() {
     return (
       <>
@@ -32,6 +33,10 @@ export const router = createBrowserRouter([
             {
               path:"/profile",
               element: <Profile/>
+            },
+            {
+              path:"/cart",
+              element: <UserCart/>
             }
             // {
             //   path: "/form", 

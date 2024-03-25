@@ -1,7 +1,13 @@
+import { useDispatch } from 'react-redux';
 import './productCard.css'
 import { Link } from 'react-router-dom';
+import { addCartItem } from '../../store/slices/cartSlice';
 
 function ProductCard(props){
+    const dispatch = useDispatch();
+    const addItemToCart = (item) => {
+        dispatch(addCartItem(item))
+    }
     return(
         <div className="w-25 p-4" style={{height: "400px"}}>
             <div className="card shadow border-0 h-100 position-relative">
@@ -11,7 +17,7 @@ function ProductCard(props){
                     <span id="outstock" className="text-white position-absolute">Out Of Stock</span>
                 }
                 <Link to={ `/products/${props.id}`} className="h-50" >
-                    <img src={props.product.thumbnail} className="card-img-top h-100" alt="" />
+                    <img src={props.product.thumbnail} className="card-img-top h-100" alt=""/>
                 </Link>
                 <div className="card-body position-relative p-3">
                     <div className="d-flex justify-content-between align-items-center">
@@ -32,7 +38,7 @@ function ProductCard(props){
                         <i className="fa fa-star"></i>
                         <i className="fa fa-star"></i>
                     </div>
-                    <button className="mt-5" id="addtocart">
+                    <button className="mt-5" id="addtocart" onClick={() => addItemToCart(props.product)}>
                         Add to Cart
                     </button>
                 </div>
